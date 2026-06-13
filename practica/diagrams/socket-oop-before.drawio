@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="oop-before" id="ob1">
+    <mxGraphModel dx="900" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="t" value="Socket layer - ÎNAINTE: ierarhie OOP, dispatch virtual" style="text;html=1;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="820" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="iface" value="IAtSocket (interfață abstractă)&#10;+ virtual Send()&#10;+ virtual Read()&#10;+ virtual Close()&#10;+ virtual ParseUrc()" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="60" width="260" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="cli" value="SocketTcpClient&#10;+ stare proprie&#10;+ mutex propriu" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="220" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="srv" value="SocketTcpServer&#10;+ stare proprie&#10;+ mutex propriu" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="240" width="220" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="con" value="TcpServerConnection&#10;+ raw parent ptr -&gt; SocketTcpServer&#10;+ stare proprie" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="640" y="240" width="220" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="ei1" style="endArrow=block;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="cli" target="iface">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="ei2" style="endArrow=block;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="srv" target="iface">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="ei3" style="endArrow=block;endFill=0;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="con" target="iface">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="ptr" value="raw pointer (UAF risk)" style="endArrow=classic;html=1;dashed=1;strokeColor=#b85450;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" edge="1" parent="1" source="con" target="srv">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="udp" value="Adăugare UDP =&gt;&#10;2 clase noi (UdpClient, UdpServer)&#10;2 vtable-uri noi&#10;lifecycle propriu&#10;plumbing duplicat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="400" width="380" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="prob" value="Stare împrăștiată pe mai multe obiecte =&gt;&#10;invarianți greu de menținut sub concurență.&#10;&#10;Raw pointer parent =&gt; UAF dacă server&#10;distrus înainte de conexiuni." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="400" width="380" height="120" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

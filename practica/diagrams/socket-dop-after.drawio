@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="dop-after" id="da1">
+    <mxGraphModel dx="900" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="950" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="t" value="Socket layer - DUPĂ: Data-Oriented, array-uri plate, handle opac" style="text;html=1;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="870" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="user" value="Cod utilizator&#10;&#10;SocketId { type, modemId }&#10;(handle opac, 2 octeți)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="260" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="mgr" value="SocketManager" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="400" y="60" width="510" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="arrs" value="Array-uri plate (stare centralizată):&#10;&#10;slotType_[N]       [Type][Type][...]&#10;tcpClients_[N]   [data][data][...]&#10;tcpConns_[N]     [data][data][...]&#10;server_                 [data]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="400" y="110" width="510" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="sw" value="Dispatch (un singur switch per apel public):&#10;&#10;switch (id.type) {&#10;  case Tcp: tcp_client_ops::Send(...); break;&#10;  case Udp: udp_ops::Send(...);            break;&#10;  ...&#10;}" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="400" y="260" width="510" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="call" value="apel API (handle opac)" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="user" target="mgr">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="inv" value="Invariant central:&#10;&#10;slotType_[i] == None    date slot i în stare reset" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="320" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="td" value="Teardown în 2 faze:&#10;&#10;Faza 1: AT command   sub xSlotMutex_[i]&#10;Faza 2: reset date    sub xIterationMutex_ -&gt; xMainMutex_" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="360" width="320" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="udp" value="Adăugare UDP = 1 caz nou în switch + 1 array nou.&#10;Fără clase noi, fără vtable-uri, fără lifecycle dedicat." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="400" y="420" width="510" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="ben" value="Stare centralizată =&gt; invariant verificabil într-un singur loc.&#10;Fără pointeri raw între socket-uri =&gt; fără UAF prin lifecycle.&#10;Mai puțin cod, mai puține alocări, mai puține căi de eroare." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="510" width="870" height="80" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
